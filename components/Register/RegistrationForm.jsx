@@ -125,8 +125,8 @@ const RegistrationForm = () => {
   };
 
   const totalAmount = selectedEvents.reduce((sum, e) => sum + e.price, 0);
-  const upiString = `upi://pay?pa=college@upi&pn=RoboRumble&am=${totalAmount}&tn=Reg-${teamName}`;
-
+  // UPI ID aur Event ka naam
+const upiString = `upi://pay?pa=oscuragamer1-2@okaxis&pn=RoboRumble26&am=${totalAmount}&tn=Reg-${teamName}`;
   // FINAL SUBMIT
   const handleSubmit = async () => {
     if (totalAmount > 0 && (!transactionId || !screenshot)) {
@@ -197,7 +197,7 @@ const RegistrationForm = () => {
             <NeonInput label="Password" type="password" placeholder="******" val={leader.password} setVal={(v)=>setLeader({...leader, password: v})} color={neonGreen} />
           </div>
 
-          {/* ASLI EMAIL VERIFICATION SECTION */}
+          {/* EMAIL VERIFICATION SECTION */}
           <div className="bg-slate-800/40 border border-slate-700/50 p-6 rounded-xl mt-6">
             <label className="text-gray-300 text-sm font-bold mb-3 block uppercase tracking-wide">Email Verification</label>
             <div className="flex flex-col md:flex-row gap-3">
