@@ -1,6 +1,6 @@
 // File: src/app/api/admin/update-status/route.js
 import connectDB from "@/lib/db";
-import User from "@/models/User.js";
+import User from "@/Models/User.js";
 import { NextResponse } from "next/server";
 
 export async function POST(req) {

@@ -1,5 +1,5 @@
 import connectDB from "@/lib/db";
-import User from "@/models/User.js"; // Fixed extension
+import User from "@/Models/User.js"; // Fixed extension
 import { NextResponse } from "next/server";
 
 export async function POST(req) {

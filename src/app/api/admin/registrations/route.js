@@ -1,5 +1,5 @@
 import connectDB from "@/lib/db";
-import User from "@/models/User.js";
+import User from "@/Models/User.js";
 import { NextResponse } from "next/server";
 
 // Isse ensure hoga ki naya registration hote hi list update ho jaye
