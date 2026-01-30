@@ -14,7 +14,7 @@ export const EventsData = [
     image: "/images/robo-soccer.jpeg", 
     prize: "₹20k",
     type: "competition",
-    eligibility: "Team of 3-5",
+    eligibility: "Team of 2-5",
     desc: "Robo-Soccer is an exciting robotics competition in which teams build and control robots to play a soccer-style match inside a defined arena. The objective is to score goals by maneuvering the ball into the opponent’s goal while following specific rules and time constraints. This event enhances participants’ skills in robot control, coordination, strategy formulation, and teamwork, while promoting innovation and precision in robotic design." 
   },
   { 
@@ -32,7 +32,7 @@ export const EventsData = [
     image: "/images/aeromodelling.jpeg", 
     prize: "₹20k",
     type: "competition",
-    eligibility: "Team of 3-5",
+    eligibility: "Team of 2-5",
     desc: "Aeromodelling and RC Flying is a technical event where participants design, build, and fly remote-controlled aircraft. The competition evaluates flight stability, control accuracy, design efficiency, and innovation. This event provides practical exposure to aerodynamics, propulsion systems, and flight mechanics." 
   },
   { 
@@ -60,7 +60,7 @@ export const EventsData = [
     image: "/images/robo-war.jpeg", 
     prize: "₹20k",
     type: "competition", // NEW FIELD
-    eligibility: "Team of 3-5",
+    eligibility: "Team of 2-5",
     desc: "Robo-War is a competitive robotics event in which teams design and build remote-controlled robots to battle against each other inside a closed arena. The objective is to disable, immobilize, or push the opponent's robot out of the arena using strength, strategy, and innovative design, while strictly adhering to predefined safety and technical rules. This event tests participants' skills in mechanical design, electronics, control systems, and teamwork, and encourages creativity, strategic thinking, and real-time problem-solving under competitive conditions." 
   },
    

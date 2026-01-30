@@ -106,7 +106,7 @@ const EventModal = ({ event, onClose }) => {
 
              <div>
                 <h4 className="text-slate-500 text-xs uppercase tracking-widest font-bold mb-3">Point of Contact</h4>
-                <p className="text-white text-sm font-medium">Devanshu: +91 98765 43210</p>
+                <p className="text-white text-sm font-medium">Devanshu: +91 6394114923</p>
              </div>
           </div>
 
