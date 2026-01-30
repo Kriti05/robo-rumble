@@ -161,7 +161,7 @@ export default function AdminPage() {
                         <tr><td colSpan="5" className="p-10 text-center text-gray-500 italic">No registrations found.</td></tr>
                     ) : (
                         data.map((user) => (
-                            <tr key={user._id} className="border-b border-slate-900 hover:bg-white/[0.02] transition-colors group">
+                            <tr key={user._id} className="border-b border-slate-900 hover:bg-white/[0.02]` transition-colors group">
                                 <td className="p-5">
                                     <p className="font-black text-lg text-white group-hover:text-[#00ff9f] transition-colors">{user.teamName}</p>
                                     <p className="text-[10px] text-gray-500 font-mono mt-1 uppercase tracking-widest">{user._id.slice(-8)}</p>
@@ -169,7 +169,7 @@ export default function AdminPage() {
                                 <td className="p-5">
                                     <p className="font-bold text-gray-200">{user.leader?.name}</p>
                                     <p className="text-xs text-[#00ff9f] font-mono">{user.leader?.phone}</p>
-                                    <p className="text-[10px] text-gray-400 truncate max-w-[150px]">{user.leader?.email}</p>
+                                    <p className="text-[10px] text-gray-400 truncate `max-w-[150px]">{user.leader?.email}</p>
                                 </td>
                                 <td className="p-5">
                                     <div className="flex flex-wrap gap-1">

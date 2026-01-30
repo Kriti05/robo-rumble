@@ -41,7 +41,7 @@ const EventModal = ({ event, onClose }) => {
           
           {/* Header */}
           <div className="mb-6">
-            <h2 className="text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-600 drop-shadow-[0_0_15px_rgba(6,182,212,0.5)] font-[Oswald] uppercase tracking-wide mb-2 ">
+            <h2 className="text-4xl md:text-5xl font-black text-transparent bg-clip-text `bg-gradient-to-r from-cyan-400 to-blue-600 drop-shadow-[0_0_15px_rgba(6,182,212,0.5)] font-[Oswald] uppercase tracking-wide mb-2 ">
               {event.title}
             </h2>
             <p className="text-slate-400 text-sm md:text-base tracking-wide">

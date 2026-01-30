@@ -255,7 +255,7 @@ export default function TeamSection() {
 
             {/* NAME & ROLE */}
             <div className="text-center space-y-1 z-10 w-full mb-3">
-                <h2 className="text-xl font-bold uppercase tracking-[0.1em] text-white drop-shadow-md animate-fade">
+                <h2 className="text-xl font-bold uppercase `tracking-[0.1em] text-white drop-shadow-md animate-fade">
                     {selectedMember.name}
                 </h2>
                 <p className="text-yellow-400 text-xs font-bold tracking-[0.25em] uppercase animate-fade delay-75">
@@ -354,7 +354,7 @@ export default function TeamSection() {
           {/* Main Content Side-by-Side */}
           <div className="flex w-full items-center justify-center gap-16 px-10">
              {/* Large Image */}
-             <div className="relative w-72 h-80 animate-float flex-shrink-0">
+             <div className="relative w-72 h-80 animate-float `flex-shrink-0">
                 <div className="absolute -top-3 -left-3 w-6 h-6 border-t-2 border-l-2 border-[#00FF9E]" />
                 <div className="absolute -top-3 -right-3 w-6 h-6 border-t-2 border-r-2 border-[#00FF9E]" />
                 <div className="absolute -bottom-3 -left-3 w-6 h-6 border-b-2 border-l-2 border-[#00FF9E]" />
@@ -401,7 +401,7 @@ export default function TeamSection() {
                             key={i}
                             onClick={() => setSelectedMember(member)}
                             className={`
-                                relative w-32 h-40 flex-shrink-0 cursor-pointer transition-all duration-300 border border-white/10 hover:scale-105 group 
+                                relative w-32 h-40 shrink-0 cursor-pointer transition-all duration-300 border border-white/10 hover:scale-105 group 
                                 ${selectedMember.name === member.name ? "border-[#00FF9E] bg-black/60 shadow-[0_0_10px_#00FF9E]" : "opacity-70 bg-black/30"}
                             `}
                         >
