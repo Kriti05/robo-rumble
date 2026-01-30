@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+// models/User.js
 
 const UserSchema = new mongoose.Schema({
   leader: {
@@ -7,7 +7,7 @@ const UserSchema = new mongoose.Schema({
     phone: { type: String, required: true },
     college: { type: String, required: true },
     course: { type: String, required: true },
-    password: { type: String, required: true }, // 
+    password: { type: String, required: true },
   },
   teamName: { type: String, required: true },
   members: [
@@ -21,8 +21,10 @@ const UserSchema = new mongoose.Schema({
   selectedEvents: [{ type: String }],
   totalAmount: { type: Number, required: true },
   transactionId: { type: String, required: true },
-  status: { type: String, default: "Pending" }, // Admin baad me verify karega
+  
+  
+  screenshotUrl: { type: String, default: "" }, 
+  
+  status: { type: String, default: "Pending" },
   createdAt: { type: Date, default: Date.now },
 });
-
-export default mongoose.models.User || mongoose.model("User", UserSchema);
