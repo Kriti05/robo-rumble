@@ -10,8 +10,8 @@ const RegistrationForm = () => {
   const [loading, setLoading] = useState(false);
   const [otpSent, setOtpSent] = useState(false);
   const [otp, setOtp] = useState("");
-  const [serverOtp, setServerOtp] = useState(""); // Backend se aaya OTP store karne ke liye
-  const [timer, setTimer] = useState(0); // Resend timer
+  const [serverOtp, setServerOtp] = useState(""); 
+  const [timer, setTimer] = useState(0); 
   
   const [leader, setLeader] = useState({
     name: "", email: "", phone: "", college: "", course: "", password: ""
@@ -36,7 +36,6 @@ const RegistrationForm = () => {
     { id: 10, name: "Line Following Robot", price: 400 },
   ];
 
-  // Timer logic for Resend OTP
   useEffect(() => {
     let interval;
     if (timer > 0) {
@@ -45,26 +44,32 @@ const RegistrationForm = () => {
     return () => clearInterval(interval);
   }, [timer]);
 
-  // --- HELPER: CLOUDINARY UPLOAD ---
+  // --- HELPER: CLOUDINARY UPLOAD (Updated with Error Handling) ---
   const uploadToCloudinary = async (file) => {
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("upload_preset", "ml_default"); 
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("upload_preset", "ml_default"); 
 
-    const res = await fetch(
-      `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload`,
-      { method: "POST", body: formData }
-    );
-    const data = await res.json();
-    return data.secure_url;
+      const res = await fetch(
+        `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload`,
+        { method: "POST", body: formData }
+      );
+      
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error?.message || "Upload failed");
+      return data.secure_url;
+    } catch (err) {
+      console.error("Cloudinary Error:", err);
+      alert("Image upload fail ho gayi. Dobara koshish karein.");
+      return null;
+    }
   };
 
   // --- LOGIC FUNCTIONS ---
   
-  // REAL OTP SEND FUNCTION
   const handleSendOtp = async () => {
     if (!leader.email) return alert("Please enter email first!");
-    
     setLoading(true);
     try {
       const res = await fetch("/api/send-otp", {
@@ -72,13 +77,11 @@ const RegistrationForm = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: leader.email }),
       });
-      
       const data = await res.json();
-      
       if (res.ok) {
         setOtpSent(true);
-        setServerOtp(data.otp); // Humne backend se OTP mangwaya (sirf development ke liye, production me ye hidden rahega)
-        setTimer(60); // 60 seconds timer
+        setServerOtp(data.otp);
+        setTimer(60);
         alert(`OTP has been sent to ${leader.email}`);
       } else {
         alert(data.message || "Failed to send OTP");
@@ -91,16 +94,15 @@ const RegistrationForm = () => {
   };
 
   const verifyAndProceed = () => {
-    // String conversion for safe comparison
     if (otp.toString() !== serverOtp.toString()) {
       return alert("Invalid OTP! Please check your email.");
     }
     setStep(2);
   };
 
-  // Team Logic
+  // Team Logic (Updated with 5-member limit)
   const addMember = () => {
-    if (members.length + 1 >= 5) return alert("Max 5 members!");
+    if (members.length >= 4) return alert("Leader ke alawa maximum 4 members hi ho sakte hain (Total 5)!");
     setMembers([...members, { name: "", email: "", phone: "", course: "" }]);
   };
 
@@ -125,13 +127,19 @@ const RegistrationForm = () => {
   };
 
   const totalAmount = selectedEvents.reduce((sum, e) => sum + e.price, 0);
-  // UPI ID aur Event ka naam
-const upiString = `upi://pay?pa=oscuragamer1-2@okaxis&pn=RoboRumble26&am=${totalAmount}&tn=Reg-${teamName}`;
-  // FINAL SUBMIT
+  const upiString = `upi://pay?pa=oscuragamer1-2@okaxis&pn=RoboRumble26&am=${totalAmount}&tn=Reg-${teamName}`;
+
+  // FINAL SUBMIT (Updated with File Size Check)
   const handleSubmit = async () => {
     if (totalAmount > 0 && (!transactionId || !screenshot)) {
       return alert("Please complete payment details!");
     }
+    
+    // File Size Check (2MB Limit)
+    if (screenshot && screenshot.size > 2 * 1024 * 1024) {
+      return alert("Screenshot size 2MB se kam hona chahiye!");
+    }
+
     if (!teamName) return alert("Please enter Team Name");
 
     setLoading(true);
@@ -139,6 +147,7 @@ const upiString = `upi://pay?pa=oscuragamer1-2@okaxis&pn=RoboRumble26&am=${total
       let imageUrl = "";
       if (screenshot) {
         imageUrl = await uploadToCloudinary(screenshot);
+        if (!imageUrl) return; // Stop if upload failed
       }
 
       const registrationData = {
@@ -169,11 +178,12 @@ const upiString = `upi://pay?pa=oscuragamer1-2@okaxis&pn=RoboRumble26&am=${total
     }
   };
 
+  // ... (Baaki ka JSX render logic same rahega)
   return (
     <div className="w-full max-w-4xl bg-[#0a101f]/80 backdrop-blur-2xl p-6 md:p-10 rounded-2xl border shadow-2xl mt-28 md:mt-32 mb-10 animate-fade-in relative z-20 mx-auto"
       style={{ borderColor: `${neonGreen}50`, boxShadow: `0 0 40px -5px ${neonGreen}20` }}
     >
-      {/* Header */}
+      {/* Step Header */}
       <div className="text-center mb-8">
         <h1 className="text-3xl md:text-5xl font-black uppercase tracking-wider mb-6" style={{ color: neonGreen, textShadow: `0 0 20px ${neonGreen}60` }}>
           {step === 1 && "Leader Registration"}
@@ -197,7 +207,6 @@ const upiString = `upi://pay?pa=oscuragamer1-2@okaxis&pn=RoboRumble26&am=${total
             <NeonInput label="Password" type="password" placeholder="******" val={leader.password} setVal={(v)=>setLeader({...leader, password: v})} color={neonGreen} />
           </div>
 
-          {/* EMAIL VERIFICATION SECTION */}
           <div className="bg-slate-800/40 border border-slate-700/50 p-6 rounded-xl mt-6">
             <label className="text-gray-300 text-sm font-bold mb-3 block uppercase tracking-wide">Email Verification</label>
             <div className="flex flex-col md:flex-row gap-3">
@@ -220,7 +229,7 @@ const upiString = `upi://pay?pa=oscuragamer1-2@okaxis&pn=RoboRumble26&am=${total
         </div>
       )}
 
-      {/* Rest of Step 2 and Step 3 remain same as your code */}
+      {/* Step 2 & 3 content logic remains identical to yours but uses the new addMember/handleSubmit */}
       {step === 2 && (
         <div className="space-y-8 animate-fade-in">
           <NeonInput label="Team Name" placeholder="e.g. Cyber Squad" val={teamName} setVal={setTeamName} color={neonGreen} />
@@ -239,6 +248,7 @@ const upiString = `upi://pay?pa=oscuragamer1-2@okaxis&pn=RoboRumble26&am=${total
                ))}
              </div>
           </div>
+
           <div>
             <h3 className="text-xl font-bold text-gray-200 mb-4">Select Events</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -250,6 +260,7 @@ const upiString = `upi://pay?pa=oscuragamer1-2@okaxis&pn=RoboRumble26&am=${total
               ))}
             </div>
           </div>
+
           {totalAmount > 0 && (
             <div className="bg-[#151f32] p-8 rounded-xl border border-slate-700">
               <div className="flex flex-col md:flex-row items-center gap-10">
@@ -259,11 +270,12 @@ const upiString = `upi://pay?pa=oscuragamer1-2@okaxis&pn=RoboRumble26&am=${total
                      <span className="text-gray-400 text-sm uppercase">Total Amount: <span className="text-5xl font-black text-white ml-2">₹ {totalAmount}</span></span>
                    </div>
                    <NeonInput label="Transaction ID (UTR)" placeholder="12-digit UTR" val={transactionId} setVal={setTransactionId} color={neonGreen} />
-                   <input type="file" onChange={(e) => setScreenshot(e.target.files[0])} className="w-full bg-slate-800 p-2 rounded border border-slate-700 text-sm text-gray-400" />
+                   <input type="file" accept="image/*" onChange={(e) => setScreenshot(e.target.files[0])} className="w-full bg-slate-800 p-2 rounded border border-slate-700 text-sm text-gray-400" />
                 </div>
               </div>
             </div>
           )}
+
           <div className="flex gap-4 pt-4">
              <button onClick={() => setStep(1)} className="px-8 py-3 rounded-lg text-gray-400 font-bold uppercase">Back</button>
              <button onClick={handleSubmit} disabled={loading} className="flex-1 py-4 rounded-lg font-black uppercase tracking-widest text-lg shadow-lg" style={{ backgroundColor: neonGreen, color: '#002a1b' }}>
