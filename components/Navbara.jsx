@@ -69,7 +69,7 @@ export default function Navbar() {
                     <MobileNavLink href="/events" onClick={() => setIsOpen(false)}>Events</MobileNavLink>
                     <MobileNavLink href="/schedule" onClick={() => setIsOpen(false)}>Schedule</MobileNavLink>
                     <MobileNavLink href="/patrons" onClick={() => setIsOpen(false)}>Patrons</MobileNavLink>
-                    <MobileNavLink href="/our-team" onClick={() => setIsOpen(false)}>Our Team</MobileNavLink>
+                    <MobileNavLink href="/contacts" onClick={() => setIsOpen(false)}>Our Team</MobileNavLink>
                     <MobileNavLink href="/gallery" onClick={() => setIsOpen(false)}>Gallery</MobileNavLink>
                     <MobileNavLink href="/register" onClick={() => setIsOpen(false)}>Registration</MobileNavLink>
                     <MobileNavLink href="/sponsors" onClick={() => setIsOpen(false)}>Sponsors</MobileNavLink>
